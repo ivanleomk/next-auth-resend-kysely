@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-kysely"
+
+  // Optionally provide a destination directory for the generated file
+  // and a filename of your choice
+  output       = "../src/db"
+  fileName     = "types.ts"
+  // Optionally generate runtime enums to a separate file
+  enumFileName = "enums.ts"
+}
+
+model User {
+  id   String @id
+  Note Note[]
+}
+
+model Note {
+  id                Int              @id @default(autoincrement())
+  user              User             @relation(fields: [userId], references: [id])
+  title             String
+  content           String
+  createdAt         DateTime         @default(now())
+  lastModifiedAt    DateTime         @updatedAt
+  tags              Tag[]
+  audioTranscriptId Int?
+  audioTranscript   AudioTranscript? @relation(fields: [audioTranscriptId], references: [id])
+  userId            String
+}
+
+model Tag {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  Note   Note?  @relation(fields: [noteId], references: [id])
+  noteId Int?
+}
+
+model AudioTranscript {
+  id              Int     @id @default(autoincrement())
+  fileUrl         String
+  transcribedText String?
+  notes           Note[]
+}
