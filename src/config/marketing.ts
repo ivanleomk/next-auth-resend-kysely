@@ -1,12 +1,5 @@
-export type NavItem = {
-  title: string
-  href: string
-  disabled?: boolean
-}
+import { MarketingConfig } from "@/types";
 
-type MarketingConfig = {
-  mainNav: NavItem[]
-}
 
 export const marketingConfig: MarketingConfig = {
   mainNav: [

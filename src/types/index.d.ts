@@ -7,3 +7,35 @@ export type SiteConfig = {
     github: string
   }
 }
+
+export type DashboardConfig = {
+  mainNav: NavItem[],
+  sidebarNav: SidebarNavItem[]
+}
+
+
+export type NavItem = {
+  title: string
+  href: string
+  disabled?: boolean
+}
+
+type MarketingConfig = {
+  mainNav: NavItem[]
+}
+
+export type SidebarNavItem = {
+  title: string
+  disabled?: boolean
+  external?: boolean
+  icon?: keyof typeof Icons
+} & (
+    | {
+      href: string
+      items?: never
+    }
+    | {
+      href?: string
+      items: NavLink[]
+    }
+  )

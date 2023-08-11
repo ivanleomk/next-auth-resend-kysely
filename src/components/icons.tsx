@@ -24,7 +24,8 @@ import {
   User,
   X,
   type Icon as LucideIcon,
-} from "lucide-react"
+  //@ts-ignore
+} from "lucide-react/dist/esm/lucide-react"
 
 export type Icon = LucideIcon
 
