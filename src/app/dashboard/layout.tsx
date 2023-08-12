@@ -2,7 +2,6 @@ import { DashboardNav } from "@/components/dashboard/DashboardNav"
 import MainNav from "@/components/layout/MainNav"
 import { Button } from "@/components/ui/button"
 import { dashboardConfig } from "@/config/dashboard"
-import { UserButton } from "@clerk/nextjs"
 import Link from "next/link"
 
 
@@ -18,7 +17,7 @@ export default async function MarketingLayout({
       <header className="container z-40 bg-background">
         <div className="flex h-20 items-center justify-between py-6">
           <MainNav items={dashboardConfig.mainNav} />
-          <UserButton />
+          {/* TODO: Add in Avatar url here */}
         </div>
       </header>
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">

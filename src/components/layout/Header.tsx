@@ -6,11 +6,10 @@ import React from 'react'
 import MainNav from "./MainNav"
 import { marketingConfig } from "@/config/marketing"
 import { useSelectedLayoutSegment } from "next/navigation"
-import { useUser } from "@clerk/nextjs"
 
 const Header = () => {
 
-  const user = useUser();
+  const user = null
   return (
     <header className="container z-40 bg-background">
       <div className="flex h-20 items-center justify-between py-6">
