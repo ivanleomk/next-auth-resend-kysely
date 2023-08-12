@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import Header from '@/components/layout/Header'
+import Header from '@/components/layout/Header';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/config/site';
-import { PrismaClient } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 
 export default async function Home() {
