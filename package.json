@@ -34,6 +34,7 @@
     "prisma-kysely": "^1.5.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "resend": "^0.17.2",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.6",
