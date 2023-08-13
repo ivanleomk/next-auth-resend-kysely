@@ -5,7 +5,7 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export type Account = {
-    id: string;
+    id: Generated<string>;
     userId: string;
     type: string;
     provider: string;
@@ -33,7 +33,7 @@ export type Note = {
     userId: string;
 };
 export type Session = {
-    id: string;
+    id: Generated<string>;
     sessionToken: string;
     userId: string;
     expires: Timestamp;
@@ -44,7 +44,7 @@ export type Tag = {
     noteId: number | null;
 };
 export type User = {
-    id: string;
+    id: Generated<string>;
     name: string | null;
     email: string | null;
     emailVerified: Timestamp | null;

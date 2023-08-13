@@ -1,14 +1,13 @@
 import { EmailTemplate } from "@/emails/welcome-email";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import { Resend } from 'resend';
-
+import { KyselyAdapter } from "@auth/kysely-adapter";
+import { db } from "@/lib/db";
 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const prisma = new PrismaClient();
+
 
 const providerConfig = EmailProvider({
   server: {
@@ -43,5 +42,6 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  adapter: PrismaAdapter(prisma),
+  //@ts-ignore
+  adapter: KyselyAdapter(db),
 }

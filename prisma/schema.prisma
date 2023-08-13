@@ -3,23 +3,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 // generator client {
-//   provider = "prisma-kysely"
-
-//   // Optionally provide a destination directory for the generated file
-//   // and a filename of your choice
-//   output       = "../src/db"
-//   fileName     = "types.ts"
-//   // Optionally generate runtime enums to a separate file
-//   enumFileName = "enums.ts"
+//   provider = "prisma-client-js"
 // }
 
+generator client {
+  provider = "prisma-kysely"
+
+  // Optionally provide a destination directory for the generated file
+  // and a filename of your choice
+  output       = "../src/db"
+  fileName     = "types.ts"
+  // Optionally generate runtime enums to a separate file
+  enumFileName = "enums.ts"
+}
+
 model Account {
-  id                String  @id @default(cuid())
+  id                String  @id @default(dbgenerated("gen_random_uuid()"))
   userId            String
   type              String
   provider          String
@@ -38,7 +38,7 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(dbgenerated("gen_random_uuid()"))
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -46,7 +46,7 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(dbgenerated("gen_random_uuid()"))
   name          String?
   email         String?   @unique
   emailVerified DateTime?
