@@ -22,6 +22,8 @@ const providerConfig = EmailProvider({
   sendVerificationRequest: async ({ identifier, url, provider }) => {
     try {
       const emailAddress = process.env.NODE_ENV === "development" ? "delivered@resend.dev" : identifier;
+
+      console.log("Sending Email Now")
       //@ts-ignore
       const data = await resend.emails.send({
         from: 'Ivan Leo <hello@ivanleo.com>',
@@ -36,6 +38,7 @@ const providerConfig = EmailProvider({
     }
   },
 });
+// TODO: Add in credentials support for local dev. ( A special toggle )
 
 export const authOptions: NextAuthOptions = {
   providers: [providerConfig],
@@ -44,4 +47,7 @@ export const authOptions: NextAuthOptions = {
   },
   //@ts-ignore
   adapter: KyselyAdapter(db),
+  pages: {
+    signIn: "/login"
+  }
 }

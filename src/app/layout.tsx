@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header'
 import { Inter as FontSans } from "next/font/google"
 import localFont from "next/font/local"
 import { cn } from '@/lib/utils'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -43,6 +44,7 @@ export default function RootLayout({
         <div>
           {children}
         </div>
+        <Toaster />
       </body>
     </html>
   )

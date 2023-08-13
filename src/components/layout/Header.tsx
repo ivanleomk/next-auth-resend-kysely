@@ -20,17 +20,21 @@ const Header = ({ user }: Props) => {
       <div className="flex h-20 items-center justify-between py-6">
         <MainNav items={marketingConfig.mainNav} />
         <div>
-          {
-            user && <span className="text-muted-foreground mr-4">{user.email}</span>
-          }
+          {user && (
+            <span className="text-sm text-muted-foreground mr-4">
+              {user.email && user.email.length > 16
+                ? `${user.email.slice(0, 8)}...${user.email.slice(-5)}`
+                : user.email}
+            </span>
+          )}
           <Link
-            href={"/dashboard"}
+            href={user ? "/dashboard" : "/login"}
             className={cn(
               buttonVariants({ variant: "secondary", size: "sm" }),
               "px-4"
             )}
           >
-            Dashboard
+            {user ? "Dashboard" : "Log In"}
           </Link>
           {
             user &&
