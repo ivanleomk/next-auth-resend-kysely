@@ -20,20 +20,28 @@ const Header = ({ user }: Props) => {
       <div className="flex h-20 items-center justify-between py-6">
         <MainNav items={marketingConfig.mainNav} />
         <div>
+          {
+            user && <span className="text-muted-foreground mr-4">{user.email}</span>
+          }
           <Link
-            href={user ? "/dashboard" : "/login"}
+            href={"/dashboard"}
             className={cn(
               buttonVariants({ variant: "secondary", size: "sm" }),
               "px-4"
             )}
           >
-            {user ? "Dashboard" : "Login"}
+            Dashboard
           </Link>
-          <Button
-
-            onClick={() => signOut()}>
-            Log Out
-          </Button>
+          {
+            user &&
+            <Button
+              variant="outline"
+              size="sm"
+              className="ml-4 px-4"
+              onClick={() => signOut()}>
+              Log Out
+            </Button>
+          }
         </div>
 
       </div>
