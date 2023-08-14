@@ -18,30 +18,11 @@ export type Account = {
     id_token: string | null;
     session_state: string | null;
 };
-export type AudioTranscript = {
-    id: Generated<number>;
-    fileUrl: string;
-    transcribedText: string | null;
-};
-export type Note = {
-    id: Generated<number>;
-    title: string;
-    content: string;
-    createdAt: Generated<Timestamp>;
-    lastModifiedAt: Timestamp;
-    audioTranscriptId: number | null;
-    userId: string;
-};
 export type Session = {
     id: Generated<string>;
     sessionToken: string;
     userId: string;
     expires: Timestamp;
-};
-export type Tag = {
-    id: Generated<number>;
-    name: string;
-    noteId: number | null;
 };
 export type User = {
     id: Generated<string>;
@@ -57,10 +38,7 @@ export type VerificationToken = {
 };
 export type DB = {
     Account: Account;
-    AudioTranscript: AudioTranscript;
-    Note: Note;
     Session: Session;
-    Tag: Tag;
     User: User;
     VerificationToken: VerificationToken;
 };
