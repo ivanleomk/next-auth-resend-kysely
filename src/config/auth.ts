@@ -17,7 +17,7 @@ const providerConfig = EmailProvider({
     port: process.env.EMAIL_SERVER_PORT,
     auth: {
       user: process.env.EMAIL_SERVER_USER,
-      pass: process.env.EMAIL_SERVER_PASSWORD,
+      pass: process.env.RESEND_API_KEY,
     },
   },
   from: process.env.EMAIL_FROM,
@@ -27,7 +27,7 @@ const providerConfig = EmailProvider({
       const isDevOrStaging = process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview"
       const emailAddress = isDevOrStaging ? "delivered@resend.dev" : identifier;
 
-      console.log("Sending Email Now")
+
       //@ts-ignore
       const data = await resend.emails.send({
         from: 'Ivan Leo <hello@ivanleo.com>',
