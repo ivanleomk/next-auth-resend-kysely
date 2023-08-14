@@ -8,7 +8,17 @@ import { marketingConfig } from "@/config/marketing"
 import { useSelectedLayoutSegment } from "next/navigation"
 import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 type Props = {
   user: Session["user"];
@@ -22,8 +32,8 @@ const Header = ({ user }: Props) => {
         <div>
           {user && (
             <span className="text-sm text-muted-foreground mr-4">
-              {user.email && user.email.length > 16
-                ? `${user.email.slice(0, 8)}...${user.email.slice(-5)}`
+              {user.email && user.email.length > 20
+                ? `${user.email.slice(0, 10)}...${user.email.slice(-7)}`
                 : user.email}
             </span>
           )}
@@ -31,12 +41,32 @@ const Header = ({ user }: Props) => {
             href={user ? "/dashboard" : "/login"}
             className={cn(
               buttonVariants({ variant: "secondary", size: "sm" }),
-              "px-4"
+              "px-4 mr-4"
             )}
           >
             {user ? "Dashboard" : "Log In"}
           </Link>
-          {
+
+          {user && <AlertDialog>
+            <AlertDialogTrigger>
+              <p className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>Log Out</p>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Sign Out</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Please confirm if you'd like to sign out
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+                >Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>}
+          {/* {
             user &&
             <Button
               variant="outline"
@@ -45,7 +75,7 @@ const Header = ({ user }: Props) => {
               onClick={() => signOut()}>
               Log Out
             </Button>
-          }
+          } */}
         </div>
 
       </div>
