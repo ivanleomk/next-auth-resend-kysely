@@ -53,7 +53,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  notes         Note[]
 }
 
 model VerificationToken {
@@ -62,31 +61,4 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-model Note {
-  id                Int              @id @default(autoincrement())
-  user              User             @relation(fields: [userId], references: [id])
-  title             String
-  content           String
-  createdAt         DateTime         @default(now())
-  lastModifiedAt    DateTime         @updatedAt
-  tags              Tag[]
-  audioTranscriptId Int?
-  audioTranscript   AudioTranscript? @relation(fields: [audioTranscriptId], references: [id])
-  userId            String
-}
-
-model Tag {
-  id     Int    @id @default(autoincrement())
-  name   String @unique
-  Note   Note?  @relation(fields: [noteId], references: [id])
-  noteId Int?
-}
-
-model AudioTranscript {
-  id              Int     @id @default(autoincrement())
-  fileUrl         String
-  transcribedText String?
-  notes           Note[]
 }

@@ -1,3 +1,4 @@
+import { siteConfig } from '@/config/site';
 import {
   Body,
   Container,
@@ -53,13 +54,13 @@ export const NotionMagicLinkEmail = ({
 
         <Text style={footer}>
           <Link
-            href="https://prepwithai.com"
+            href={siteConfig.url}
             target="_blank"
             style={{ ...link, color: '#898989' }}
           >
-            PrepwithAI
+            {siteConfig.name}
           </Link>
-          , the one stop resource to help you prepare for your next interview.
+          , {siteConfig.description}
         </Text>
       </Container>
     </Body>

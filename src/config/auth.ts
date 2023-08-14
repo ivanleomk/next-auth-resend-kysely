@@ -45,7 +45,6 @@ const providerConfig = EmailProvider({
     }
   },
 });
-// TODO: Add in credentials support for local dev. ( A special toggle )
 
 export const authOptions: NextAuthOptions = {
   providers: [providerConfig],
