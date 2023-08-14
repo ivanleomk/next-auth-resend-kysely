@@ -1,9 +1,10 @@
-import { EmailTemplate } from "@/emails/welcome-email";
+
 import { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import { Resend } from 'resend';
 import { KyselyAdapter } from "@auth/kysely-adapter";
 import { db } from "@/lib/db";
+import NotionMagicLinkEmail from "../../emails/emails/notion-magic-link";
 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -29,7 +30,7 @@ const providerConfig = EmailProvider({
         from: 'Ivan Leo <hello@ivanleo.com>',
         to: [emailAddress],
         subject: 'Welcome to Brain Dump!',
-        react: EmailTemplate({ loginUrl: url })
+        react: NotionMagicLinkEmail({ loginUrl: url })
       });
 
       console.log(data);
