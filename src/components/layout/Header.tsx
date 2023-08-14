@@ -55,7 +55,7 @@ const Header = ({ user }: Props) => {
               <AlertDialogHeader>
                 <AlertDialogTitle>Sign Out</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Please confirm if you'd like to sign out
+                  Please confirm if you&apos;d like to sign out
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -66,16 +66,6 @@ const Header = ({ user }: Props) => {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>}
-          {/* {
-            user &&
-            <Button
-              variant="outline"
-              size="sm"
-              className="ml-4 px-4"
-              onClick={() => signOut()}>
-              Log Out
-            </Button>
-          } */}
         </div>
 
       </div>
