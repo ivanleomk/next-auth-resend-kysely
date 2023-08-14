@@ -22,7 +22,9 @@ const providerConfig = EmailProvider({
   from: process.env.EMAIL_FROM,
   sendVerificationRequest: async ({ identifier, url, provider }) => {
     try {
-      const emailAddress = process.env.NODE_ENV === "development" ? "delivered@resend.dev" : identifier;
+      console.log(process.env.VERCEL_ENV)
+      const isDevOrStaging = process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview"
+      const emailAddress = isDevOrStaging ? "delivered@resend.dev" : identifier;
 
       console.log("Sending Email Now")
       //@ts-ignore
