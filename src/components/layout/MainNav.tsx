@@ -1,5 +1,6 @@
 "use client"
 
+import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
 import { NavItem } from '@/types';
 import Link from 'next/link';
@@ -17,7 +18,7 @@ const MainNav = ({ items }: Props) => {
   return (
     <div className="flex gap-6 md:gap-10">
       <h1 className="font-bold">
-        Brain Dump
+        {siteConfig.name}
       </h1>
       {items.length ? (
         <nav className="hidden gap-6 md:flex">

@@ -8,7 +8,19 @@ import { marketingConfig } from "@/config/marketing"
 import { useSelectedLayoutSegment } from "next/navigation"
 import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import UserEmail from "../Header/UserEmail"
+import LogoutButton from "../Header/LogoutButton"
 
 type Props = {
   user: Session["user"];
@@ -20,20 +32,17 @@ const Header = ({ user }: Props) => {
       <div className="flex h-20 items-center justify-between py-6">
         <MainNav items={marketingConfig.mainNav} />
         <div>
+          <UserEmail user={user} />
           <Link
             href={user ? "/dashboard" : "/login"}
             className={cn(
               buttonVariants({ variant: "secondary", size: "sm" }),
-              "px-4"
+              "px-4 mr-4"
             )}
           >
-            {user ? "Dashboard" : "Login"}
+            {user ? "Dashboard" : "Log In"}
           </Link>
-          <Button
-
-            onClick={() => signOut()}>
-            Log Out
-          </Button>
+          {user && <LogoutButton />}
         </div>
 
       </div>

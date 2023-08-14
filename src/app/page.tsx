@@ -8,17 +8,16 @@ import { getServerSession } from 'next-auth';
 export default async function Home() {
   const session = await getServerSession();
 
-
   return (
     <main>
       <Header user={session?.user} />
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center h-[24rem] justify-center">
           <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
-            Brain Dump
+            {siteConfig.name}
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            Capture everything and organize it later.
+            {siteConfig.description}
           </p>
           <div className="space-x-4">
             <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }))}>

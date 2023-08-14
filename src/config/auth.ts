@@ -1,9 +1,11 @@
-import { EmailTemplate } from "@/emails/welcome-email";
+
 import { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import { Resend } from 'resend';
 import { KyselyAdapter } from "@auth/kysely-adapter";
 import { db } from "@/lib/db";
+import NotionMagicLinkEmail from "../../emails/emails/notion-magic-link";
+import { siteConfig } from "./site";
 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -15,19 +17,26 @@ const providerConfig = EmailProvider({
     port: process.env.EMAIL_SERVER_PORT,
     auth: {
       user: process.env.EMAIL_SERVER_USER,
-      pass: process.env.EMAIL_SERVER_PASSWORD,
+      pass: process.env.RESEND_API_KEY,
     },
   },
   from: process.env.EMAIL_FROM,
+
   sendVerificationRequest: async ({ identifier, url, provider }) => {
     try {
-      const emailAddress = process.env.NODE_ENV === "development" ? "delivered@resend.dev" : identifier;
+      const isDevOrStaging = process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview"
+      const emailAddress = isDevOrStaging ? "delivered@resend.dev" : identifier;
+
+
       //@ts-ignore
       const data = await resend.emails.send({
         from: 'Ivan Leo <hello@ivanleo.com>',
         to: [emailAddress],
-        subject: 'Welcome to Brain Dump!',
-        react: EmailTemplate({ loginUrl: url })
+        subject: `Your welcome email to ${siteConfig.name}`,
+        react: NotionMagicLinkEmail({ loginUrl: url }),
+        headers: {
+          "X-Entity-Ref-ID": new Date().getTime() + "",
+        }
       });
 
       console.log(data);
@@ -36,6 +45,7 @@ const providerConfig = EmailProvider({
     }
   },
 });
+// TODO: Add in credentials support for local dev. ( A special toggle )
 
 export const authOptions: NextAuthOptions = {
   providers: [providerConfig],
@@ -44,4 +54,7 @@ export const authOptions: NextAuthOptions = {
   },
   //@ts-ignore
   adapter: KyselyAdapter(db),
+  pages: {
+    signIn: "/login"
+  }
 }
