@@ -5,6 +5,7 @@ import { Resend } from 'resend';
 import { KyselyAdapter } from "@auth/kysely-adapter";
 import { db } from "@/lib/db";
 import NotionMagicLinkEmail from "../../emails/emails/notion-magic-link";
+import { siteConfig } from "./site";
 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -20,9 +21,9 @@ const providerConfig = EmailProvider({
     },
   },
   from: process.env.EMAIL_FROM,
+
   sendVerificationRequest: async ({ identifier, url, provider }) => {
     try {
-      console.log(process.env.VERCEL_ENV)
       const isDevOrStaging = process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview"
       const emailAddress = isDevOrStaging ? "delivered@resend.dev" : identifier;
 
@@ -31,8 +32,11 @@ const providerConfig = EmailProvider({
       const data = await resend.emails.send({
         from: 'Ivan Leo <hello@ivanleo.com>',
         to: [emailAddress],
-        subject: 'Welcome to Brain Dump!',
-        react: NotionMagicLinkEmail({ loginUrl: url })
+        subject: `Your welcome email to ${siteConfig.name}`,
+        react: NotionMagicLinkEmail({ loginUrl: url }),
+        headers: {
+          "X-Entity-Ref-ID": new Date().getTime() + "",
+        }
       });
 
       console.log(data);

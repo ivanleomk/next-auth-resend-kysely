@@ -19,6 +19,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import UserEmail from "../Header/UserEmail"
+import LogoutButton from "../Header/LogoutButton"
 
 type Props = {
   user: Session["user"];
@@ -30,13 +32,7 @@ const Header = ({ user }: Props) => {
       <div className="flex h-20 items-center justify-between py-6">
         <MainNav items={marketingConfig.mainNav} />
         <div>
-          {user && (
-            <span className="text-sm text-muted-foreground mr-4">
-              {user.email && user.email.length > 20
-                ? `${user.email.slice(0, 10)}...${user.email.slice(-7)}`
-                : user.email}
-            </span>
-          )}
+          <UserEmail user={user} />
           <Link
             href={user ? "/dashboard" : "/login"}
             className={cn(
@@ -46,26 +42,7 @@ const Header = ({ user }: Props) => {
           >
             {user ? "Dashboard" : "Log In"}
           </Link>
-
-          {user && <AlertDialog>
-            <AlertDialogTrigger>
-              <p className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>Log Out</p>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Sign Out</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Please confirm if you&apos;d like to sign out
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
-                >Continue</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>}
+          {user && <LogoutButton />}
         </div>
 
       </div>
