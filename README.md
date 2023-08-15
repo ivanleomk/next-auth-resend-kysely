@@ -12,6 +12,14 @@ Once you've done so, just fill in the necessary values and you should be good to
 
 Note that while in development mode, I've configured emails to be sent to the test email account provided by Resend at `delivered@resend.dev`. You can change this in the `pages/api/auth/[...nextauth].js` file.
 
+You can edit the emails using `React-Email` by running the commands
+
+```bash
+cd ./emails
+npm install
+npm run dev
+```
+
 ## Deploying
 
 When deploying to Vercel, make sure to provide the following variables 
