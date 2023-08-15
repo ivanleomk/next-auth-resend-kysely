@@ -30,8 +30,8 @@ const providerConfig = EmailProvider({
 
       //@ts-ignore
       const data = await resend.emails.send({
-        from: 'Ivan Leo <hello@ivanleo.com>',
-        to: [emailAddress],
+        from: // TODO: Add your email address here,
+          to: [emailAddress],
         subject: `Your welcome email to ${siteConfig.name}`,
         react: NotionMagicLinkEmail({ loginUrl: url }),
         headers: {
@@ -55,5 +55,38 @@ export const authOptions: NextAuthOptions = {
   adapter: KyselyAdapter(db),
   pages: {
     signIn: "/login"
+  },
+  callbacks: {
+    session: async ({ session, token, user }) => {
+      if (token) {
+        session.user.id = token.id
+        session.user.name = token.name
+        session.user.email = token.email
+        session.user.image = token.picture
+      }
+
+      return session
+    },
+    jwt: async ({ token, user }) => {
+      if (!token.email) {
+        return token
+      }
+
+      const dbUser = await db.selectFrom("User").where("email", "=", token.email).selectAll().executeTakeFirst()
+
+      if (!dbUser) {
+        if (user) {
+          token.id = user?.id
+        }
+        return token
+      }
+
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        picture: dbUser.image,
+      }
+    },
   }
 }
